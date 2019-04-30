@@ -1,0 +1,11 @@
+.container{
+    .item{
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        margin: 25px auto;
+        ul{
+            list-style: none;
+        }
+    }
+}
