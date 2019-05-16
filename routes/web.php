@@ -13,12 +13,25 @@
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    $categories = \App\Tree::where('parent_id', 0)->get();
+    return view('tree.index', compact('categories'));
 });
 Route::resource('contacts', 'ContactController');
 Route::resource('tree', 'TreeController');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('category-tree-view',['uses'=>'CategoryController@manageCategory']);
-Route::post('add-category',['as'=>'add.category','uses'=>'CategoryController@addCategory']);
+Route::get('test', function(){
+    return App\Tree::with('childs')
+    ->where('parent_id',0)
+    ->get();
+});
+
+Route::get('tree', function() {
+    $categories = \App\Tree::where('parent_id', 0)->get();
+    return view('tree.index', compact('categories'));
+});
+
+
+
+

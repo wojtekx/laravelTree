@@ -20,21 +20,26 @@ class TreeController extends Controller
      */
     public function index()
     {
-        $tree = Tree::all();
+        $tree = Tree::with('childs')->where('parent_id',0)->get();
 
         return view('tree.index', compact('tree'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $select = null;
+        if (isset($request->id))
+        {
+            $select = Tree::find($request->id)->id;
+        }
+
         $trees = Tree::all()->toArray();
         $names = Arr::pluck($trees, 'name', 'id');
-        return view('tree.create', compact('names'));
+        return view('tree.create', compact('names', 'select'));
     }
 
     /**
@@ -53,7 +58,7 @@ class TreeController extends Controller
         $tree->name = $request->get('nazwa');
         $tree->parent_id = $request->get('parent_id');
         $tree->save();
-        return redirect('/tree')->with('success', 'Record saved!');
+        return redirect('/')->with('success', 'Record saved!');
     }
 
     /**
@@ -75,7 +80,8 @@ class TreeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Tree::find($id);
+        return view('tree.edit', compact('item'));    
     }
 
     /**
@@ -87,7 +93,15 @@ class TreeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nazwa'=>'required',
+        ]);
+
+        $item = Tree::find($id);
+        $item->name =  $request->get('nazwa');
+        $item->save();
+
+        return redirect('/')->with('success', 'Contact updated!');
     }
 
     /**
@@ -99,8 +113,19 @@ class TreeController extends Controller
     public function destroy($id)
     {
         $tree = Tree::find($id);
-        $tree->delete();
 
-        return redirect('/tree')->with('success', 'Contact deleted!');
+        if ($tree !== null)
+            $tree->delete();
+        
+        $treeChild = Tree::where('parent_id', $id);
+        
+        if($treeChild->exists()) {
+            foreach ($treeChild->get() as $id){
+                return $this->destroy($id->id);
+            }
+        } else
+            return redirect('/');
+        
     }
+
 }

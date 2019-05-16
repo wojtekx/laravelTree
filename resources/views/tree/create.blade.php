@@ -3,20 +3,30 @@
 @section('main')
 
 <div class="form">
-    <h1>Add new record</h1>
+        @if(isset($select) && !empty($select))
+        <h1>Dodaj nowe Dziecko</h1>
+        @else
+        <h1>Dodaj nowy Element</h1>
+        @endif
+   
+    <a style="margin: 19px 3px;" href="{{  url('/') }}" class="btn btn-primary">Wróć</a>
     <form method="post" action="{{ route('tree.store') }}">
             @csrf
         <div class="form-group">
             <label for="nazwa">{{ __('Nazwa') }}:</label>
-            <input type="text" class="form-control" name="nazwa" required />
+            @if(isset($select) && !empty($select))
+            <input type="hidden" name="parent_id" value="{{$select}}">
+            @else
             <select name="parent_id">
-                    <option value="0">nadrzędny</option>
+                    <option value="0">Element nadrzędny</option>
                 @foreach($names as $key => $name )
                     <option value="{{$key}}">{{$name}}</option>
                 @endforeach
             </select>
+            @endif
+            <input type="text" class="form-control" name="nazwa" required />
         </div>
-        <button>Add</button>
+        <button class="btn btn-success">Dodaj</button>
     </form>
 
 </div>
