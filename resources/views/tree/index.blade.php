@@ -6,10 +6,11 @@
             <a style="margin: 19px 3px;" href="{{ route('tree.create')}}" class="btn btn-primary">Nowy Element</a>
         </div>   
 
-        <ul id="tree1">
+        
                 @foreach($categories as $category)
-                    <li>
-                        {{ $category->name }}
+                <ul class="active">
+                    <li id="{{$category->id}}" class="ready" >
+                       <a class="element"> {{ $category->name }}</a>
                         <div class="options">
                                 <a href="{{ route('tree.create', ['id' => $category->id])}}" class="btn btn-success">Dodaj</a>
                                 <a href="{{ route('tree.edit',$category->id)}}" class="btn btn-primary">Edytuj</a>
@@ -27,8 +28,26 @@
                         @endif
 
                     </li>
+                </ul>
                 @endforeach
-            </ul>
+        
 </div>
 
 @endsection
+
+
+@push('custom-scripts')
+    <script type="text/javascript">
+          
+          $("ul li a").on("click", function () {
+                if ($(this).parent().hasClass("ready")) {
+                    if ($(this).parent().find("ul").hasClass("active")) {
+                        $(this).parent().find("ul").removeClass("active");
+                    } else $(this).parent().find("ul").addClass("active");
+                }
+            });
+
+          
+
+    </script>
+@endpush

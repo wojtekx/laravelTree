@@ -1,7 +1,8 @@
-<ul>
+
         @foreach($childs as $child)
-        <li>
-            {{ $child->name }}
+        <ul>
+            <li id="{{$child->id}}"  class="ready" >
+           <a class="element"> {{ $child->name }}</a>
             <div class="options">
                     <a href="{{ route('tree.create', ['id' => $child->id])}}" class="btn btn-success">Dodaj</a>
                     <a href="{{ route('tree.edit',$child->id)}}" class="btn btn-primary">Edytuj</a>
@@ -15,5 +16,8 @@
                 @include('manageChild',['childs' => $child->childs])
              @endif
         </li>
-        @endforeach
     </ul>
+        @endforeach
+  
+
+    
