@@ -39,15 +39,16 @@
 @push('custom-scripts')
     <script type="text/javascript">
           
-          $("ul li a").on("click", function () {
+            $("ul li a.element").on("click", function () {
                 if ($(this).parent().hasClass("ready")) {
                     if ($(this).parent().find("ul").hasClass("active")) {
                         $(this).parent().find("ul").removeClass("active");
                     } else $(this).parent().find("ul").addClass("active");
                 }
             });
+         
 
-          
+            
 
     </script>
 @endpush

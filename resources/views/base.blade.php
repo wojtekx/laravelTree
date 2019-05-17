@@ -7,10 +7,28 @@
   <style>
   .options {
     display: inline-flex;
+    opacity:0;
     margin:5px 0;
+    width: 300px;
+    justify-content: flex-end;
+    transform: translateX(-90px);
+    z-index: 1;
+    position: absolute;
+  }
+  a:hover + .options{
+    opacity:1;
+  }
+  .options:hover{
+    opacity:1;
   }
   .options *{
     margin: 0 2px;
+  }
+  a.element{
+    margin: 14px 0 11px;
+    display: inline-flex;
+    z-index: 2;
+    position: relative;
   }
   .hide{
     display: none;
