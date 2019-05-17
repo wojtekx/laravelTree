@@ -24,7 +24,7 @@
                 @endforeach
             </select>
             @endif
-            <input type="text" class="form-control" name="nazwa" required />
+            <input type="text" pattern="[A-Za-z0-9\s]+" class="form-control" name="nazwa" required />
         </div>
         <button class="btn btn-success">Dodaj</button>
     </form>

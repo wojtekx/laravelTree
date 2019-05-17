@@ -10,7 +10,7 @@
             @csrf
             <div class="form-group">
                 <label for="nazwa">{{ __('Nazwa') }}:</label>
-                <input type="text" class="form-control" name="nazwa" value='{{ $item->name }}' required />
+                <input type="text" pattern="[A-Za-z0-9\s]+" class="form-control" name="nazwa" value='{{ $item->name }}' required />
             </div>
             <button type="submit" class="btn btn-primary">Zatwierdź</button>
         </form>
