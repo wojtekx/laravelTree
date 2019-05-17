@@ -1,8 +1,8 @@
 @extends('base') 
 @section('main')
 <div class="row">
-    <div class="col-sm-8 offset-sm-2">
-        <h1 class="display-3">Edytuj element</h1>
+    <div >
+        <h1>Edytuj element</h1>
 
         <a style="margin: 19px 3px;" href="{{  url('/tree') }}" class="btn btn-primary">Wróć</a>
         <form method="post" action="{{ route('tree.update', $item->id) }}">
